@@ -1,0 +1,51 @@
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		FindAverageApp.run();
+	}
+}
+
+class FindAverageApp {
+	public static void run()
+	{
+		int val, min = 100, max = 0, total = 0, cnt = 0;
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		
+		for (;;) {
+			System.out.print("Bir değer girmek istiyor musunuz? evet:1 hayır:0 ");
+			int n = kb.nextInt();
+			
+			if (n == 0 && n != 1)
+				break;
+			
+			System.out.print("Bir değer giriniz:");
+			val = kb.nextInt();
+			
+			if (val < 0 || val > 100) {
+				System.out.println("Geçersiz değer girdiniz...");
+				continue;
+			}
+			
+			total += val;
+			++cnt;
+			
+			if (val < min)
+				min = val;
+			
+			if (val > max)
+				max = val;			
+		}
+		
+		System.out.printf("Toplam %d değer girildi%n", cnt);
+		System.out.printf("Max = %d%n", max);
+		System.out.printf("Min = %d%n", min);
+		System.out.printf("Ortalama = %f%n", total / (double)cnt);		
+	}
+}
+
+
+
+
+
