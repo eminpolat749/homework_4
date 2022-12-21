@@ -3,49 +3,79 @@ package csd;
 class App {
 	public static void main(String [] args)
 	{
-		FindAverageApp.run();
+		CalculateSumCountMinMaxAvgApp.run();
 	}
 }
 
-class FindAverageApp {
-	public static void run()
+class CalculateSumCountMinMaxAvgApp {
+	public static int getValue(java.util.Scanner kb)
 	{
-		int val, min = 100, max = 0, total = 0, cnt = 0;
-		java.util.Scanner kb = new java.util.Scanner(System.in);
+		int val;
 		
 		for (;;) {
-			System.out.print("Bir değer girmek istiyor musunuz? evet:1 hayır:0 ");
-			int n = kb.nextInt();
+			System.out.print("Bir tamsayı giriniz:");
+			val = Integer.parseInt(kb.nextLine());
 			
-			if (n == 0 && n != 1)
-				break;
+			if (0 <= val && val <= 100)
+				return val;
 			
-			System.out.print("Bir değer giriniz:");
-			val = kb.nextInt();
-			
-			if (val < 0 || val > 100) {
-				System.out.println("Geçersiz değer girdiniz...");
-				continue;
-			}
-			
-			total += val;
-			++cnt;
-			
-			if (val < min)
-				min = val;
-			
-			if (val > max)
-				max = val;			
-		}
+			System.out.println("\"Geçersiz değer girdiniz!...\"\n\"Yeni bir değer giriniz:\"");			
+		}		
+	}
+	public static int getOption(java.util.Scanner kb)
+	{
+		int option;
 		
-		System.out.printf("Toplam %d değer girildi%n", cnt);
-		System.out.printf("Max = %d%n", max);
-		System.out.printf("Min = %d%n", min);
-		System.out.printf("Ortalama = %f%n", total / (double)cnt);		
+		do
+			option = Integer.parseInt(kb.nextLine());
+		while (option != 0 && option != 1);
+		
+		return option;
+	}
+	public static void print(CalculateSumCountMinMaxAvg c)
+	{
+		System.out.printf("Toplam %d değer girildi%n", c.count);
+		System.out.printf("Max = %d%n", c.max);
+		System.out.printf("Min = %d%n", c.min);
+		System.out.printf("Ortalama = %f%n", c.getAverage());
+		
+	}
+	public static void run()
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		CalculateSumCountMinMaxAvg c = new CalculateSumCountMinMaxAvg();
+		
+		for (;;) {
+			c.calculate(getValue(kb));
+			
+			System.out.println("Yeni bir değer girmek istiyor musunuz? [Evet için 1(bir) Hayır için 0(sıfır) değerlerinden birini giriniz]");
+			
+			int option = getOption(kb);
+			
+			if (option == 0)
+				break;			
+		}
+		print(c);
 	}
 }
 
-
-
-
+class CalculateSumCountMinMaxAvg {
+	public int count;
+	public int min = 100;
+	public int max;
+	public int sum;
+	
+	public void calculate(int val)
+	{
+		++count;
+		sum += val;
+		min = Math.min(val, min);
+		max = Math.max(val, max);
+	}
+	
+	public double getAverage()
+	{
+		return (double)sum / count;
+	}
+}
 
